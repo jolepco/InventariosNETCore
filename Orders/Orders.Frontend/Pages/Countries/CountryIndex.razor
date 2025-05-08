@@ -1,0 +1,49 @@
+﻿@page "/countries"
+
+
+<div class="card">
+    <div class="card-header">
+        <span>
+            <i class="bi bi-globe-americas" /> Países
+            <a class="btn btn-sm btn-primary float-end" @onclick=@(() => ShowModalAsync())><i class="bi bi-plus-circle" /> Adicionar País</a>
+        </span>
+    </div>
+    <div class="card-body">
+        @* Filtro *@
+        <Filter PlaceHolder="Buscar Paices" Callback=@FilterCallBack></Filter>
+
+        <GenericList MyList="listCountries">
+            <Body>
+                <Pagination CurrentPage="currentPage"
+                            TotalPages="totalPages"
+                            SelectedPage="SelectedPageAsync" RecordsNumber="SelectedRecordsNumberAsync" />
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>País</th>
+                            <th style="width:210px">Departamentos / Estados</th>
+                            <th style="width:168px"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var country in listCountries!)
+                        {
+                            <tr>
+                                <td>
+                                    <a href="/countries/details/@country.Id"> @country.Name</a>
+
+                                </td>
+                                <td> @country.StatesNumber</td>
+                                <td>
+                                    <a class="btn btn-warning btn-sm" @onclick=@(() => ShowModalAsync(country.Id, true))><i class="bi bi-pencil" /> Editar</a>
+                                    <button @onclick=@(() => DeleteAsync(country)) class="btn btn-sm btn-danger"><i class="bi bi-trash" /> Borrar</button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                
+            </Body>
+        </GenericList>
+    </div>
+</div>

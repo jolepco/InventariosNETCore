@@ -1,0 +1,45 @@
+﻿@page "/categories"
+
+<div class="card">
+    <div class="card-header">
+        <span>
+            <i class="bi bi-list-check"></i> Categorias
+            <a class="btn btn-sm btn-primary float-end" @onclick=@(() => ShowModalAsync())><i class="bi bi-plus-circle" /> Adicionar Categoría</a>
+
+        </span>
+    </div>
+    <div class="card-body">
+        @* filtro generico *@
+        <Filter PlaceHolder="Buscar categoría..." Callback=@FilterCallBack />
+        <GenericList MyList="Categories">
+            <Body>
+                @* Paginacion *@
+                <Pagination CurrentPage="currentPage"
+                            TotalPages="totalPages"
+                            SelectedPage="SelectedPageAsync" RecordsNumber="SelectedRecordsNumberAsync" />
+               
+
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Categoría</th>
+                            <th style="width:168px"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var category in Categories!)
+                        {
+                            <tr>
+                                <td>@category.Name</td>
+                                <td>
+                                    <a @onclick=@(() => ShowModalAsync(category.Id, true)) class="btn btn-sm btn-warning"><i class="bi bi-pencil" /> Editar</a>
+                                    <button @onclick=@(() => DeleteAsycn(category)) class="btn btn-sm btn-sm btn-danger"><i class="bi bi-trash" /> Borrar</button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </Body>
+        </GenericList>
+    </div>
+</div>

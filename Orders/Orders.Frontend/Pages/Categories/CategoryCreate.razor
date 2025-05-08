@@ -1,0 +1,16 @@
+﻿@page "/categories/create"
+
+
+<div class="card">
+    <div class="card-header">
+        <span>
+            <i class="bi bi-list-check"></i> Crear Categoría
+           @*  <a class="btn btn-sm btn-primary float-end" href="/categories/create"><i class="bi bi-plus-square"></i> Adicionar Categoría</a> *@
+        </span>
+    </div>
+    <div class="card-body">
+        @* <CategoryForm @ref="categoryForm" Category="category" OnValidSubmit="CreateAsync" ReturnAction="Return" /> *@
+        <FormWithName @ref="categoryForm" Label0="Codigo:" Label1="Nombre"
+                      Model="category" OnValidSubmit="CreateAsync" ReturnAction="Return" />
+    </div>
+</div>

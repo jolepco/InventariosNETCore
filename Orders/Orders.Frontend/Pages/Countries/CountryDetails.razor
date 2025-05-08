@@ -1,0 +1,59 @@
+﻿@page "/countries/details/{CountryId:int}"
+
+
+@if (country is null)
+{
+    <Loading />
+}
+else
+{
+    <div class="card">
+
+        <div class="card-header">
+            <span>
+                <a class="btn btn-sm btn-primary float-end mx-1" @onclick=@(() => ShowModalAsync())><i class="bi bi-plus-square" />Adicionar Estado/Departamento</a>
+                <a class="btn btn-sm btn-success float-end" href="/countries"><i class="bi bi-arrow-left" />  Regresar</a>
+            </span>
+        </div>
+        <div class="card-body">
+            @* Filtro  *@
+            <Filter PlaceHolder="Buscar Estado/Departamento" Callback=@FilterCallBack></Filter>
+
+            <GenericList MyList="states!">
+                <Body>
+                  
+                    <Pagination CurrentPage="currentPage"
+                                TotalPages="totalPages"
+                                SelectedPage="SelectedPageAsync" RecordsNumber="SelectedRecordsNumberAsync" />
+
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Estado / Departamento</th>
+                                <th style="width:90px">Ciudades</th>
+                                <th style="width:180px"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var state in states!)
+                            {
+                                <tr>
+                                    <td>
+                                        <a href="/states/details/@state.Id">@state.Name</a>
+                                    </td>
+                                    <td>
+                                        @state.CitiesNumber
+                                    </td>
+                                    <td>
+                                        <a @onclick=@(() => ShowModalAsync(state.Id, true)) class="btn btn-sm btn-warning"><i class="bi bi-pencil" /> Editar</a>
+                                        <button class="btn btn-danger btn-sm" @onclick=@(() => DeleteAsync(state))><i class="bi bi-trash" /> Borrar</button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </Body>
+            </GenericList>
+        </div>
+    </div>
+}
